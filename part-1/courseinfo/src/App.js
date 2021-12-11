@@ -22,6 +22,7 @@ const Content = ({ parts }) => {
 		</div>
 	);
 };
+
 const Total = ({ parts }) => {
 	return (
 		<div>
