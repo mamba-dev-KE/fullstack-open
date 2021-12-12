@@ -16,30 +16,28 @@ const Options = ({ options, handleGood, handleNeutral, handleBad }) => {
 
 const StatisticLine = ({ text, value }) => {
 	return (
-		<div>
-			<p>
-				{text} {value}
-			</p>
-		</div>
+		<tr>
+			<td>{text}</td> <td>{value}</td>
+		</tr>
 	);
 };
 
 /* Statistics component for displaying statistics */
 const Statistics = ({ good, neutral, bad, allClicks, sum }) => {
-	let average = sum / allClicks.length;
-	let positivePercent = (good / (good + neutral + bad)) * 100 + " %";
+	let average = (sum / allClicks.length).toFixed(2);
+	let positivePercent = (good / (good + neutral + bad)).toFixed(2) * 100 + " %";
 	let all = good + neutral + bad;
 
 	if (allClicks.length !== 0) {
 		return (
-			<>
+			<table>
 				<StatisticLine text="good" value={good} />
 				<StatisticLine text="neutral" value={neutral} />
 				<StatisticLine text="bad" value={bad} />
 				<StatisticLine text="all" value={all} />
 				<StatisticLine text="average" value={average} />
 				<StatisticLine text="positive" value={positivePercent} />
-			</>
+			</table>
 		);
 	}
 	return (
