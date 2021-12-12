@@ -18,15 +18,22 @@ const Options = ({ options, handleGood, handleNeutral, handleBad }) => {
 const Statistics = ({ good, neutral, bad, allClicks, sum }) => {
 	let average = sum / allClicks.length;
 	let positivePercent = (good / (good + neutral + bad)) * 100;
+
+	if (allClicks.length !== 0) {
+		return (
+			<div>
+				<p>good {good}</p>
+				<p>neutral {neutral}</p>
+				<p>bad {bad}</p>
+				<p>all {good + neutral + bad}</p>
+				<p>average {average ? `: ${average}` : ":"}</p>
+				<p>positive {positivePercent ? `: ${positivePercent} %` : ":"} </p>
+			</div>
+		);
+	}
 	return (
 		<div>
-			<h2>statistics</h2>
-			<p>good {good}</p>
-			<p>neutral {neutral}</p>
-			<p>bad {bad}</p>
-			<p>all {good + neutral + bad}</p>
-			<p>average {average ? `: ${average}` : ":"}</p>
-			<p>positive {positivePercent ? `: ${positivePercent} %` : ":"} </p>
+			<p>No feedback given</p>
 		</div>
 	);
 };
@@ -58,13 +65,14 @@ const App = () => {
 
 	return (
 		<div>
-			<h1 onClick={handleGood}> give feedback </h1>
+			<h1> give feedback </h1>
 			<Options
 				options={options}
 				handleGood={handleGood}
 				handleNeutral={handleNeutral}
 				handleBad={handleBad}
 			/>
+			<h2>statistics</h2>
 			<Statistics
 				good={good}
 				neutral={neutral}
