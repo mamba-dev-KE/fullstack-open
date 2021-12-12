@@ -14,21 +14,32 @@ const Options = ({ options, handleGood, handleNeutral, handleBad }) => {
 	);
 };
 
+const StatisticLine = ({ text, value }) => {
+	return (
+		<div>
+			<p>
+				{text} {value}
+			</p>
+		</div>
+	);
+};
+
 /* Statistics component for displaying statistics */
 const Statistics = ({ good, neutral, bad, allClicks, sum }) => {
 	let average = sum / allClicks.length;
-	let positivePercent = (good / (good + neutral + bad)) * 100;
+	let positivePercent = (good / (good + neutral + bad)) * 100 + " %";
+	let all = good + neutral + bad;
 
 	if (allClicks.length !== 0) {
 		return (
-			<div>
-				<p>good {good}</p>
-				<p>neutral {neutral}</p>
-				<p>bad {bad}</p>
-				<p>all {good + neutral + bad}</p>
-				<p>average {average ? `: ${average}` : ":"}</p>
-				<p>positive {positivePercent ? `: ${positivePercent} %` : ":"} </p>
-			</div>
+			<>
+				<StatisticLine text="good" value={good} />
+				<StatisticLine text="neutral" value={neutral} />
+				<StatisticLine text="bad" value={bad} />
+				<StatisticLine text="all" value={all} />
+				<StatisticLine text="average" value={average} />
+				<StatisticLine text="positive" value={positivePercent} />
+			</>
 		);
 	}
 	return (
