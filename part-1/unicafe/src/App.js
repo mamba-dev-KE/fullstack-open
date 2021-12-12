@@ -17,7 +17,8 @@ const Options = ({ options, handleGood, handleNeutral, handleBad }) => {
 const StatisticLine = ({ text, value }) => {
 	return (
 		<tr>
-			<td>{text}</td> <td>{value}</td>
+			<td>{text}</td>
+			<td>{value}</td>
 		</tr>
 	);
 };
@@ -31,12 +32,14 @@ const Statistics = ({ good, neutral, bad, allClicks, sum }) => {
 	if (allClicks.length !== 0) {
 		return (
 			<table>
-				<StatisticLine text="good" value={good} />
-				<StatisticLine text="neutral" value={neutral} />
-				<StatisticLine text="bad" value={bad} />
-				<StatisticLine text="all" value={all} />
-				<StatisticLine text="average" value={average} />
-				<StatisticLine text="positive" value={positivePercent} />
+				<tbody>
+					<StatisticLine text="good" value={good} />
+					<StatisticLine text="neutral" value={neutral} />
+					<StatisticLine text="bad" value={bad} />
+					<StatisticLine text="all" value={all} />
+					<StatisticLine text="average" value={average} />
+					<StatisticLine text="positive" value={positivePercent} />
+				</tbody>
 			</table>
 		);
 	}
