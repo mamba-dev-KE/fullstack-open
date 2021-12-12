@@ -14,13 +14,18 @@ const Options = ({ options, handleGood, handleNeutral, handleBad }) => {
 	);
 };
 
-const Statistics = ({ good, neutral, bad }) => {
+const Statistics = ({ good, neutral, bad, allClicks, sum }) => {
+	let average = sum / allClicks.length;
+	let positivePercent = (good / (good + neutral + bad)) * 100;
 	return (
 		<div>
 			<h2>statistics</h2>
 			<p>good {good}</p>
 			<p>neutral {neutral}</p>
 			<p>bad {bad}</p>
+			<p>all {good + neutral + bad}</p>
+			<p>average {average ? `: ${average}` : ":"}</p>
+			<p>positive {positivePercent ? `: ${positivePercent} %` : ":"} </p>
 		</div>
 	);
 };
@@ -29,17 +34,26 @@ const App = () => {
 	const [good, setGood] = useState(0);
 	const [neutral, setNeutral] = useState(0);
 	const [bad, setBad] = useState(0);
+	const [allClicks, setAll] = useState([]);
+
+	let sum = 0;
+
 	const options = ["good", "neutral", "bad"];
 
 	const handleGood = () => {
-		return setGood(good + 1);
+		setAll(allClicks.concat(1));
+		setGood(good + 1);
 	};
 	const handleNeutral = () => {
+		setAll(allClicks.concat(0));
 		setNeutral(neutral + 1);
 	};
 	const handleBad = () => {
+		setAll(allClicks.concat(-1));
 		setBad(bad + 1);
 	};
+
+	allClicks.forEach((item) => (sum += item));
 
 	return (
 		<div>
@@ -50,7 +64,13 @@ const App = () => {
 				handleNeutral={handleNeutral}
 				handleBad={handleBad}
 			/>
-			<Statistics good={good} neutral={neutral} bad={bad} />
+			<Statistics
+				good={good}
+				neutral={neutral}
+				bad={bad}
+				allClicks={allClicks}
+				sum={sum}
+			/>
 		</div>
 	);
 };
