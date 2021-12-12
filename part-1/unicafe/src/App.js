@@ -14,6 +14,7 @@ const Options = ({ options, handleGood, handleNeutral, handleBad }) => {
 	);
 };
 
+/* Statistics component for displaying statistics */
 const Statistics = ({ good, neutral, bad, allClicks, sum }) => {
 	let average = sum / allClicks.length;
 	let positivePercent = (good / (good + neutral + bad)) * 100;
