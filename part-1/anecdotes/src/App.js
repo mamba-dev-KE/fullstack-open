@@ -12,22 +12,7 @@ const App = () => {
 	];
 
 	const [selected, setSelected] = useState(0);
-	// const options = {
-	// 	0: 0,
-	// 	1: 0,
-	// 	2: 0,
-	// 	3: 0,
-	// 	4: 0,
-	// 	5: 0,
-	// 	6: 0,
-	// };
 	const [votes, setVote] = useState([]);
-
-	// vote[0] = 0;
-	// vote[1] = 0;
-
-	// vote[0] += 1;
-	// vote[0] += 1;
 
 	const handleClick = () => {
 		setSelected(Math.floor(Math.random() * anecdotes.length));
@@ -37,7 +22,10 @@ const App = () => {
 		setVote(votes.concat(selected));
 	};
 
-	let votesDisplay = votes.filter(vote => vote = selected);
+	/* Filter votes array and create a new array with only votes of a particular anecdote */
+	const votesCopy = [...votes];
+
+	let votesDisplay = votesCopy.filter((vote) => vote === selected);
 
 	console.log(votes);
 
