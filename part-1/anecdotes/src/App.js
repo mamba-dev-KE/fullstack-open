@@ -19,7 +19,9 @@ const App = () => {
 	};
 
 	const handleVote = () => {
-		setVote(votes.concat(selected));
+		setVote((previousState) => {
+			return [...previousState, selected];
+		});
 	};
 
 	/* Filter votes array and create a new array with only votes of a particular anecdote */
@@ -27,15 +29,16 @@ const App = () => {
 
 	let votesDisplay = votesCopy.filter((vote) => vote === selected);
 
-	console.log(votes);
-
 	return (
 		<div>
+			<h2>Anecdote of the day</h2>
 			{anecdotes[selected]}
 			<br />
 			<p>has {votesDisplay.length} votes</p>
 			<button onClick={handleVote}>vote</button>
 			<button onClick={handleClick}>next anecdote</button>
+			<h2>Anecdote with most votes</h2>
+			<p>{}</p>
 		</div>
 	);
 };

@@ -29,21 +29,18 @@ const Statistics = ({ good, neutral, bad, allClicks, sum }) => {
 	let positivePercent = (good / (good + neutral + bad)).toFixed(2) * 100 + " %";
 	let all = good + neutral + bad;
 
-	if (allClicks.length !== 0) {
-		return (
-			<table>
-				<tbody>
-					<StatisticLine text="good" value={good} />
-					<StatisticLine text="neutral" value={neutral} />
-					<StatisticLine text="bad" value={bad} />
-					<StatisticLine text="all" value={all} />
-					<StatisticLine text="average" value={average} />
-					<StatisticLine text="positive" value={positivePercent} />
-				</tbody>
-			</table>
-		);
-	}
-	return (
+	return allClicks.length !== 0 ? (
+		<table>
+			<tbody>
+				<StatisticLine text="good" value={good} />
+				<StatisticLine text="neutral" value={neutral} />
+				<StatisticLine text="bad" value={bad} />
+				<StatisticLine text="all" value={all} />
+				<StatisticLine text="average" value={average} />
+				<StatisticLine text="positive" value={positivePercent} />
+			</tbody>
+		</table>
+	) : (
 		<div>
 			<p>No feedback given</p>
 		</div>
@@ -62,15 +59,15 @@ const App = () => {
 
 	const handleGood = () => {
 		setAll(allClicks.concat(1));
-		setGood(good + 1);
+		setGood((prevState) => prevState + 1);
 	};
 	const handleNeutral = () => {
 		setAll(allClicks.concat(0));
-		setNeutral(neutral + 1);
+		setNeutral((prevState) => prevState + 1);
 	};
 	const handleBad = () => {
 		setAll(allClicks.concat(-1));
-		setBad(bad + 1);
+		setBad((prevState) => prevState + 1);
 	};
 
 	allClicks.forEach((item) => (sum += item));
