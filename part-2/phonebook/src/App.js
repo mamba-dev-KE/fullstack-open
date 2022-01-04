@@ -1,5 +1,8 @@
 import React, { useState } from "react";
+import Search from "./components/Search";
 import _ from "lodash";
+import AddContact from "./components/AddContact";
+import Contact from "./components/Contact";
 
 const App = () => {
 	const [phonebook, setPhonebook] = useState([
@@ -41,6 +44,7 @@ const App = () => {
 				...prevState,
 				{ name: newDetails.name, phone: newDetails.phone },
 			]);
+			alert(`Successfully added new contact: ${newDetails.name}!`);
 		}
 		setNewDetails({
 			name: "",
@@ -54,50 +58,23 @@ const App = () => {
 			item.phone.includes(searchString.toLowerCase())
 	);
 
-	const person = filteredPhonebook.map((item) => (
-		<p key={item.phone}>
-			{item.name}: {item.phone}
-		</p>
+	const phonebookItems = filteredPhonebook.map((item) => (
+		<Contact item={item} />
 	));
 
 	return (
 		<div>
 			<h2>Phonebook</h2>
-			<div>
-				filter shown with
-				<input
-					type="search"
-					name="search"
-					value={searchString}
-					onChange={handleSearch}
-				/>
-			</div>
-			<h2>Add new contact</h2>
-			<form onSubmit={handleSubmit}>
-				<div>
-					name:
-					<input
-						type="text"
-						name="name"
-						value={newDetails.name}
-						onChange={handleChange}
-					/>
-				</div>
-				<div>
-					number:
-					<input
-						type="tel"
-						name="phone"
-						value={newDetails.phone}
-						onChange={handleChange}
-					/>
-				</div>
-				<div>
-					<button type="submit">add</button>
-				</div>
-			</form>
+			<Search searchString={searchString} handleSearch={handleSearch} />
+
+			<AddContact
+				handleSubmit={handleSubmit}
+				newDetails={newDetails}
+				handleChange={handleChange}
+			/>
+
 			<h2>Numbers</h2>
-			{person}
+			{phonebookItems}
 		</div>
 	);
 };
