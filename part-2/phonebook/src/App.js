@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import _ from "lodash";
 
 const App = () => {
 	const [persons, setPersons] = useState([{ name: "Arto Hellas" }]);
@@ -10,8 +11,22 @@ const App = () => {
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
-		setPersons((prevState) => [...prevState, { name: newName }]);
-		setNewName("");
+
+		const newNameObject = {
+			name: newName,
+		};
+
+		const isUnique = persons.some((person) => {
+			const isEqual = _.isEqual(person, newNameObject);
+			return isEqual;
+		});
+
+		if (isUnique) {
+			alert(`${newName} is already added to phonebook`);
+		} else {
+			setPersons((prevState) => [...prevState, { name: newName }]);
+			setNewName("");
+		}
 	};
 
 	const person = persons.map((person) => (
