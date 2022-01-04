@@ -2,35 +2,48 @@ import React, { useState } from "react";
 import _ from "lodash";
 
 const App = () => {
-	const [persons, setPersons] = useState([{ name: "Arto Hellas" }]);
-	const [newName, setNewName] = useState("");
+	const [phonebook, setPhonebook] = useState([
+		{ name: "Arto Hellas", phone: "040-1234567" },
+	]);
+	const [newDetails, setNewDetails] = useState({
+		name: "",
+		phone: "",
+	});
 
 	const handleChange = (event) => {
-		setNewName(event.target.value);
+		const { name, value } = event.target;
+		setNewDetails((prevState) => ({
+			...prevState,
+			[name]: value,
+		}));
 	};
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
 
-		const newNameObject = {
-			name: newName,
-		};
-
-		const isUnique = persons.some((person) => {
-			const isEqual = _.isEqual(person, newNameObject);
+		const isUnique = phonebook.some((phonebookItem) => {
+			const isEqual = _.isEqual(phonebookItem.phone, newDetails.phone);
 			return isEqual;
 		});
 
 		if (isUnique) {
-			alert(`${newName} is already added to phonebook`);
+			alert(`The number ${newDetails.phone} was already added to phonebook!`);
 		} else {
-			setPersons((prevState) => [...prevState, { name: newName }]);
-			setNewName("");
+			setPhonebook((prevState) => [
+				...prevState,
+				{ name: newDetails.name, phone: newDetails.phone },
+			]);
 		}
+		setNewDetails({
+			name: "",
+			phone: "",
+		});
 	};
 
-	const person = persons.map((person) => (
-		<p key={person.name}>{person.name}</p>
+	const person = phonebook.map((item) => (
+		<p key={item.phone}>
+			{item.name} {item.phone}
+		</p>
 	));
 
 	return (
@@ -38,7 +51,22 @@ const App = () => {
 			<h2>Phonebook</h2>
 			<form onSubmit={handleSubmit}>
 				<div>
-					name: <input value={newName} onChange={handleChange} />
+					name:
+					<input
+						type="text"
+						name="name"
+						value={newDetails.name}
+						onChange={handleChange}
+					/>
+				</div>
+				<div>
+					number:
+					<input
+						type="tel"
+						name="phone"
+						value={newDetails.phone}
+						onChange={handleChange}
+					/>
 				</div>
 				<div>
 					<button type="submit">add</button>
