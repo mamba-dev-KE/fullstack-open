@@ -3,12 +3,16 @@ import _ from "lodash";
 
 const App = () => {
 	const [phonebook, setPhonebook] = useState([
-		{ name: "Arto Hellas", phone: "040-1234567" },
+		{ name: "Arto Hellas", phone: "040-123456", id: 1 },
+		{ name: "Ada Lovelace", phone: "39-44-5323523", id: 2 },
+		{ name: "Dan Abramov", phone: "12-43-234345", id: 3 },
+		{ name: "Mary Poppendieck", phone: "39-23-6423122", id: 4 },
 	]);
 	const [newDetails, setNewDetails] = useState({
 		name: "",
 		phone: "",
 	});
+	const [searchString, setSearchString] = useState("");
 
 	const handleChange = (event) => {
 		const { name, value } = event.target;
@@ -16,6 +20,10 @@ const App = () => {
 			...prevState,
 			[name]: value,
 		}));
+	};
+
+	const handleSearch = (event) => {
+		setSearchString(event.target.value);
 	};
 
 	const handleSubmit = (event) => {
@@ -40,15 +48,31 @@ const App = () => {
 		});
 	};
 
-	const person = phonebook.map((item) => (
+	const filteredPhonebook = phonebook.filter(
+		(item) =>
+			item.name.toLowerCase().includes(searchString.toLowerCase()) ||
+			item.phone.includes(searchString.toLowerCase())
+	);
+
+	const person = filteredPhonebook.map((item) => (
 		<p key={item.phone}>
-			{item.name} {item.phone}
+			{item.name}: {item.phone}
 		</p>
 	));
 
 	return (
 		<div>
 			<h2>Phonebook</h2>
+			<div>
+				filter shown with
+				<input
+					type="search"
+					name="search"
+					value={searchString}
+					onChange={handleSearch}
+				/>
+			</div>
+			<h2>Add new contact</h2>
 			<form onSubmit={handleSubmit}>
 				<div>
 					name:
